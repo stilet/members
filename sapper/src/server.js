@@ -8,7 +8,7 @@ import polka from 'polka';
 import path from 'path';
 import compression from 'compression';
 import bodyParser from 'body-parser'
-import * as sapper from '../__sapper__/server.js';
+import * as sapper from '@sapper/server';
 import http from 'http'
 
 const { PORT, NODE_ENV } = process.env;

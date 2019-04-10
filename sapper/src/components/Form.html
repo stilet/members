@@ -1,3 +1,38 @@
+<script>
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
+
+  import {
+    TextField,
+    InputControl,
+    EmailField,
+  } from 'svelte-bulma-forms/module'
+
+
+  export let fields;
+  export let data;
+  export let loading = false;
+  export let showButtons = true;
+  export let changes = new Map();
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function change(field, value) {
+    if (value === data[field]) {
+      // Nothing changed
+      changes.delete(field)
+    } else {
+      changes.set(field, value)
+    }
+    changes = changes
+  }
+
+  export function submit() {
+    dispatch('submit', changes)
+  }
+</script>
+
 <!-- <form on:submit|preventDefault|stopPropagation="submit()"> -->
   {#each fields as {
     type, label, placeholder, name,
@@ -9,7 +44,7 @@
         {placeholder}
         value={data[name]}
         disabled={loading}
-        on:change="change(name, event)"
+        on:change="{event => change(name, event)}"
       />
     {:elseif type === 'number'}
       <InputControl
@@ -18,7 +53,7 @@
         {placeholder}
         value={data[name]}
         disabled={loading}
-        on:change="change(name, event)"
+        on:change="{event => change(name, event)}"
       />
     {:else}
       <TextField
@@ -26,54 +61,15 @@
         {placeholder}
         value={data[name]}
         disabled={loading}
-        on:change="change(name, event)"
+        on:change="{event => change(name, event)}"
       />
     {/if}
   {/each}
 
   {#if showButtons}
   <div class="buttons is-right">
-    <button type=reset class="button" class:is-loading='loading' disabled="{loading}" on:click="fire('cancel')">Cancel</button>
-    <button type=submit class="button is-primary" class:is-loading='loading' disabled="{loading}">Save</button>
+    <button type=reset class="button" class:is-loading='{loading}' disabled="{loading}" on:click="{() => dispatch('cancel')}">Cancel</button>
+    <button type=submit class="button is-primary" class:is-loading='{loading}' disabled="{loading}">Save</button>
   </div>
   {/if}
 <!-- </form> -->
-
-<script>
-
-  import {
-    TextField,
-    InputControl,
-    EmailField,
-  } from 'svelte-bulma-forms/module'
-
-
-  export default {
-    components: {
-      TextField, InputControl, EmailField
-    },
-    data () {
-      return {
-        changes: new Map(),
-        loading: false,
-        showButtons: true
-      }
-    },
-    methods: {
-      change (field, value) {
-        const { changes, data } = this.get()
-        if (value === data[field]) {
-          // Nothing changed
-          changes.delete(field)
-        } else {
-          changes.set(field, value)
-        }
-        this.set({ changes })
-      },
-      submit () {
-        const { changes } = this.get()
-        this.fire('submit', changes)
-      }
-    }
-  }
-</script>

@@ -1,10 +1,22 @@
+<script>
+  import { fly } from 'svelte-transitions';
+
+  function notifyType(type) {
+    return {
+      success: 'success',
+      error: 'danger',
+      warning: 'warning',
+      info: 'info'
+    }[type] || 'info'
+  }
+</script>
 
 {#if $notifyQueue}
   <div class='notifications'>
     <section class='container'>
       {#each Array.from($notifyQueue.entries()) as [time, notification] (time)}
-        <div transition:fly="{y: 200, duration: 200}" class="notification is-{notifyType(notification.type)}">
-          <button class="button delete" on:click="$notifyRemove(time)">
+        <div transition:fly="{{y: 200, duration: 200}}" class="notification is-{notifyType(notification.type)}">
+          <button class="button delete" on:click="{() => $notifyRemove(time)}">
             <span class="icon is-small">
               <i class="fas fa-times"></i>
             </span>
@@ -38,23 +50,3 @@
   animation: 3s linear progress;
 }
 </style>
-
-<script>
-
-  import { fly } from 'svelte-transitions';
-
-  export default {
-    helpers: {
-      Array,
-      notifyType(type) {
-        return {
-          success: 'success',
-          error: 'danger',
-          warning: 'warning',
-          info: 'info'
-        }[type] || 'info'
-      }
-    },
-    transitions: { fly },
-  }
-</script>

@@ -1,12 +1,18 @@
-<Error :error />  
+<script context="module">
+  export async function preload({ params }) {
+    const { loggedIn } = this.store.get()
 
-{#if !member}
-  <p>Loading</p>
-{:else}
-  <Member {member} />
-{/if}
+    if (!loggedIn) {
+      return this.redirect(302, '/login')
+    }
+
+    return await preloadQueries(this.store, queries, { params })
+  }
+</script>
 
 <script>
+  import { onDestroy, onMount } from 'svelte';
+
   import gql from 'graphql-tag'
   import { loadQueries, stopQueries, preloadQueries } from 'src/lib/queries'
     
@@ -71,27 +77,26 @@
     error(err) { this.set({ error: err }) }
   }]
 
-  export default {
-    components: {
-      Member: 'src/components/Member.html',
-      Error: 'src/components/Error.html'
-      
-    },
-    oncreate() {
-      const { params } = this.get()
-      loadQueries(this, queries, { params })
-    },
-    ondestroy() {
-      stopQueries(this)
-    },
-    async preload ({ params }) {
-      const { loggedIn } = this.store.get()
+  export let error;
+  export let member;
+  export let params;
 
-      if (!loggedIn) {
-        return this.redirect(302, '/login')
-      }
+  import Member from 'src/components/Member.html';
+  import Error from 'src/components/Error.html';
 
-      return await preloadQueries(this.store, queries, { params })
-    }
-  }
+  onMount(() => {
+    loadQueries(this, queries, { params })
+  });
+
+  onDestroy(() => {
+    stopQueries(this)
+  });
 </script>
+
+<Error :error />  
+
+{#if !member}
+  <p>Loading</p>
+{:else}
+  <Member {member} />
+{/if}

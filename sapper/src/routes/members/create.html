@@ -1,57 +1,67 @@
-<h1 class='title'>Add member</h1>
+<script context="module">
+  export async function preload() {
+    const { loggedIn, permissions } = this.store.get()
+    const role = this.store.roleForPermission('member:create')
+    
+    if (!loggedIn) {
+      return this.redirect(302, '/login')
+    }
 
-<MemberEdit
-  on:submit=createMember(event)
-  {loading} 
-/>
+    if (!role) {
+      return this.redirect(302, '/')
+    }
+
+    this.store.set({ role })
+
+    return {}
+  }
+</script>
 
 <script>
+  import { onDestroy, onMount } from 'svelte';
+
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {};
+
   import gql from 'graphql-tag'
   import { goto } from '../../../__sapper__/client.js'
 
-  export default {
-    components: {
-      MemberEdit: 'src/components/MemberEdit.html'
-    },
-    methods: {
-      async createMember(data) {
-        this.set({ loading: true })
-        try {
-          const res = await this.store.addMember(data)
-          console.log("result:", res)
-          this.store.notify('success', 'Member added')
-          goto('/members')
-        } catch (e) {
-          this.store.notify('error', `Error trying to create member: ${e}`)
-          console.error("Error trying to create member", e)
-        }
-        this.set({ loading: false })
-      }
-    },
-    oncreate () {
-      const role = this.store.roleForPermission('member:read')
-      const { role: prevRole } = this.store.get()
-      this.prevRole = prevRole
-      this.store.set({ role })
-    },
-    ondestroy() {
-      this.store.set({ role: this.prevRole })
-    },
-    async preload () {
-      const { loggedIn, permissions } = this.store.get()
-      const role = this.store.roleForPermission('member:create')
-      
-      if (!loggedIn) {
-        return this.redirect(302, '/login')
-      }
+  export let loading;
 
-      if (!role) {
-        return this.redirect(302, '/')
-      }
+  import MemberEdit from 'src/components/MemberEdit.html';
 
-      this.store.set({ role })
-
-      return {}
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export async function createMember(data) {
+    loading = true
+    try {
+      const res = await __this.store.addMember(data)
+      console.log("result:", res)
+      __this.store.notify('success', 'Member added')
+      goto('/members')
+    } catch (e) {
+      __this.store.notify('error', `Error trying to create member: ${e}`)
+      console.error("Error trying to create member", e)
     }
+    loading = false
   }
+
+  onMount(() => {
+    const role = __this.store.roleForPermission('member:read')
+    const { role: prevRole } = __this.store.get()
+    __this.prevRole = prevRole
+    __this.store.set({ role })
+  });
+
+  onDestroy(() => {
+    __this.store.set({ role: __this.prevRole })
+  });
 </script>
+
+<h1 class='title'>Add member</h1>
+
+<MemberEdit
+  on:submit="{createMember}"
+  {loading} 
+/>

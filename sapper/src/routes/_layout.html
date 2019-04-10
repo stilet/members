@@ -1,3 +1,25 @@
+<script>
+	import { onDestroy, onMount } from 'svelte';
+
+	// [svelte-upgrade suggestion]
+	// manually refactor all references to __this
+	const __this = {};
+
+	export let child;
+	export let preloading;
+
+	import Nav from 'src/components/Nav.html';
+	import Notifications from 'src/components/Notifications.html';
+
+	onMount(() => {
+		__this.stopWatch = __this.store.watchAuth()
+	});
+
+	onDestroy(() => {
+		__this.stopWatch()
+	});
+</script>
+
 <Nav segment={child.segment} :child />
 
 
@@ -22,18 +44,3 @@
 		box-sizing: border-box;
 	}
 </style>
-
-<script>
-	export default {
-		components: {
-			Nav: 'src/components/Nav.html',
-			Notifications: 'src/components/Notifications.html'
-		},
-		oncreate () {
-			this.stopWatch = this.store.watchAuth()
-		},
-		ondestroy () {
-			this.stopWatch()
-		},
-	};
-</script>

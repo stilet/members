@@ -50,11 +50,11 @@
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "npm-run-all": "^4.1.2",
-    "sapper": "^0.25.0",
+    "sapper": "0.26.0-alpha.12",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "subscriptions-transport-ws": "^0.9.15",
-    "svelte": "^2.0.0",
+    "svelte": "3.0.0-beta.23",
     "svelte-apollo": "^0.2.0",
     "svelte-loader": "^2.9.0",
     "webpack": "^4.7.0"

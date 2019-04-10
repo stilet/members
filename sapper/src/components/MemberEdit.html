@@ -1,4 +1,55 @@
-<form on:submit|preventDefault|stopPropagation="fire('submit', memberEdit)" disabled='{loading}' >
+<script>
+  import { createEventDispatcher } from 'svelte';
+
+  const dispatch = createEventDispatcher();
+
+  import {
+  TextField,
+  DateField,
+  EmailField,
+  InputGroup,
+  // InputControl,
+} from 'svelte-bulma-forms/module'
+
+import { goto } from '../../__sapper__/client.js'
+
+export let memberEdit = {};
+  export let member;
+  export let loading;
+
+  export let _member;
+  $: _member = {
+      ...member,
+      ...memberEdit
+    };
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export async function submitForm(ev) {
+  ev.preventDefault()
+  ev.stopPropagation()
+  loading = true
+
+  console.log("Trying submit")
+  const res = await dispatch('submit', memberEdit)
+  console.log("Done submitting")
+
+  // const res = await this.store.addMember(memberEdit)
+  loading = false
+
+  // console.log("Added member:", memberEdit, res)
+
+}
+
+  export function fieldChange(name, value) {
+  memberEdit = {
+      ...memberEdit,
+      [name]: value
+    }
+}
+</script>
+
+<form on:submit|preventDefault|stopPropagation="{() => dispatch('submit', memberEdit)}" disabled='{loading}' >
 
   <fieldset>
     <legend>Name & Contact</legend>
@@ -9,7 +60,7 @@
       required
       value={_member.name || ''}
       disabled={loading}
-      on:change="fieldChange('name', event)"
+      on:change="{event => fieldChange('name', event)}"
     />
 
 
@@ -18,13 +69,13 @@
         placeholder='Wikkert'
         value={_member.firstname || ''}
         disabled={loading}
-        on:change="fieldChange('firstname', event)"
+        on:change="{event => fieldChange('firstname', event)}"
       />
       <TextField horizontal
         placeholder='Olbodo'
         value={_member.lastname || ''}
         disabled={loading}
-        on:change="fieldChange('lastname', event)"
+        on:change="{event => fieldChange('lastname', event)}"
       />
     </InputGroup>
 
@@ -33,14 +84,14 @@
       placeholder='wikkert@wolbodo.nl'
       value={_member.email || ''}
       disabled={loading}
-      on:change="fieldChange('email', event)"
+      on:change="{event => fieldChange('email', event)}"
     />
     <TextField horizontal
       label='Phone'
       placeholder='+31 000 0000 000'
       value={_member.phone || ''}
       disabled={loading}
-      on:change="fieldChange('phone', event)"
+      on:change="{event => fieldChange('phone', event)}"
     />
   </fieldset>
 
@@ -52,7 +103,7 @@
       placeholder='Verwersdijk 102'
       value={_member.address || ''}
       disabled={loading}
-      on:change="fieldChange('address', event)"
+      on:change="{event => fieldChange('address', event)}"
     />
 
     <InputGroup label='' horizontal>
@@ -61,14 +112,14 @@
         placeholder='2611NK'
         value={_member.zipcode || ''}
         disabled={loading}
-        on:change="fieldChange('zipcode', event)"
+        on:change="{event => fieldChange('zipcode', event)}"
       />
       <TextField horizontal
         label='City'
         placeholder='Delft'
         value={_member.city || ''}
         disabled={loading}
-        on:change="fieldChange('city', event)"
+        on:change="{event => fieldChange('city', event)}"
       />
     </InputGroup>
 
@@ -77,12 +128,12 @@
       placeholder='Nederland'
       value={_member.country || ''}
       disabled={loading}
-      on:change="fieldChange('country', event)"
+      on:change="{event => fieldChange('country', event)}"
     />
   </fieldset>
 
   <div class="buttons is-right">
-    <button type=submit class="button is-link" class:is-loading='loading' disabled="{loading}">Submit</button>
+    <button type=submit class="button is-link" class:is-loading='{loading}' disabled="{loading}">Submit</button>
   </div>
   <pre>
     {JSON.stringify(memberEdit, null, 2)}
@@ -98,63 +149,3 @@
 
   }
 </style>
-
-<script>
-import {
-  TextField,
-  DateField,
-  EmailField,
-  InputGroup,
-  // InputControl,
-} from 'svelte-bulma-forms/module'
-
-import { goto } from '../../__sapper__/client.js'
-
-export default {
-  components: {
-    TextField, 
-    EmailField,
-    InputGroup,
-    // InputControl,
-  },
-  data() {
-    return {
-      memberEdit: {}
-    }
-  },
-  computed: {
-    _member: ({ memberEdit, member }) => ({
-      ...member,
-      ...memberEdit
-    })
-  },
-  methods: {
-    async submitForm(ev) {
-      ev.preventDefault()
-      ev.stopPropagation()
-
-      const { memberEdit } = this.get()
-      this.set({ loading: true })
-
-      console.log("Trying submit")
-      const res = await this.fire('submit', memberEdit)
-      console.log("Done submitting")
-
-      // const res = await this.store.addMember(memberEdit)
-      this.set({ loading: false })
-
-      // console.log("Added member:", memberEdit, res)
-
-    },
-    fieldChange(name, value) {
-      const { memberEdit } = this.get()
-      this.set({
-        memberEdit: {
-          ...memberEdit,
-          [name]: value
-        }
-      })
-    }
-  }
-}
-</script>

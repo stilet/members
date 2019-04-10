@@ -1,3 +1,33 @@
+<script>
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {};
+
+  import slugify from 'src/lib/slugify'
+
+	export let child;
+  export let navbarOpen = false;
+  export let loading;
+
+  export let breadcrumbs;
+  $: breadcrumbs = child.props.path.split('/')
+          .splice(1)
+          .map((name, i, arr) => ({ name, path: `/${[...arr.splice(0,i), name].join('/')}` }));
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export async function logout() {
+    try {
+      loading = true
+      await __this.store.logout()
+      loading = false
+    } catch (e) {
+      loading = false
+      console.error("Error:", e)
+    }
+  }
+</script>
+
 <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
@@ -6,8 +36,8 @@
 
     <a role="button" href='open-menu'
     	class="navbar-burger burger"
-    	class:is-active="navbarOpen"
-    	on:click|stopPropagation|preventDefault="set({navbarOpen: !navbarOpen})"
+    	class:is-active="{navbarOpen}"
+    	on:click|stopPropagation|preventDefault="{() => navbarOpen = !navbarOpen}"
     	aria-label="menu"
     	aria-expanded="false"
     >
@@ -17,7 +47,7 @@
     </a>
   </div>
 
-  <div id="navbar-content" class="navbar-menu" class:is-active="navbarOpen">
+  <div id="navbar-content" class="navbar-menu" class:is-active="{navbarOpen}">
     <div class="navbar-start">
 
       {#if $permissions.includes('mail:read')}
@@ -55,7 +85,7 @@
               {$user.name}
             </a>
             {/if}
-            <button class="button is-primary" class:is-loading='loading' disabled="{loading}" on:click='logout()'>
+            <button class="button is-primary" class:is-loading='{loading}' disabled="{loading}" on:click='{logout}'>
               Log out
             </button>
           {/if}
@@ -64,36 +94,3 @@
     </div>
   </div>
 </nav>
-
-<script>
-  import slugify from 'src/lib/slugify'
-
-	export default {
-    computed: {
-      breadcrumbs: ({ child: { props: { path = '' }}}) =>
-        path.split('/')
-          .splice(1)
-          .map((name, i, arr) => ({ name, path: `/${[...arr.splice(0,i), name].join('/')}` }))
-    },
-		data () {
-			return {
-				navbarOpen: false
-			}
-		},
-    helpers: {
-      slugify
-    },
-    methods: {
-      async logout () {
-        try {
-          this.set({ loading : true })
-          await this.store.logout()
-          this.set({ loading : false })
-        } catch (e) {
-          this.set({ loading : false })
-          console.error("Error:", e)
-        }
-      }
-    }
-	}
-</script>

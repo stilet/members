@@ -1,28 +1,20 @@
-<a href='/members/{slugify(row.name)}' rel=prefetch>
-  {@html value}
-</a>
-
 <script>
   import slugify from 'src/lib/slugify'
   import highlight from 'src/lib/fuzzy-highlight'
 
-  export default {
-    computed: {
-      value: ({ result, row }) => {
-        if (result && result.length) {
-          return highlight(result[0], row.name)
-        } else {
-          return row.name
-        }
-      }
-    },
-    data () {
-      return {
-        result: undefined
-      }
-    },
-    helpers: {
-      slugify,
+  export let result;
+  export let row;
+
+  export let value;
+  $: {
+    if (result && result.length) {
+      value = highlight(result[0], row.name)
+    } else {
+      return row.name
     }
   }
 </script>
+
+<a href='/members/{slugify(row.name)}' rel=prefetch>
+  {@html value}
+</a>

@@ -1,19 +1,19 @@
-<span>
-  {@html value}
-</span>
-
 <script>
   import highlight from 'src/lib/fuzzy-highlight'
 
-  export default {
-    computed: {
-      value: ({ result, row }) => {
-        if (result && result.length) {
-          return highlight(result[1], row.fullname)
-        } else {
-          return row.fullname
-        }
-      }
+  export let result;
+  export let row;
+
+  export let value;
+  $: {
+    if (result && result.length) {
+      value = highlight(result[1], row.fullname)
+    } else {
+      return row.fullname
     }
   }
 </script>
+
+<span>
+  {@html value}
+</span>

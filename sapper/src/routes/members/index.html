@@ -1,38 +1,24 @@
-{#if $permissions.includes('member:create')}
-  <div class="field is-grouped">
-    <p class="control">
-      <a href='/members/create' rel=prefetch class="button is-primary">
-        <span class="icon">
-          <i class="fas fa-plus"></i>
-        </span>
-        <span>Create</span>
-      </a>
-    </p>
-  </div>
-{/if}
+<script context="module">
+  export async function preload() {
+  const { loggedIn } = this.store.get()
+  
+  if (!loggedIn) {
+    return this.redirect(302, '/login')
+  } else {
 
-<div class="control has-icons-left has-icons-right">
-  <input class="input is-medium" type="text" placeholder="Zoek..." bind:value='filter'>
-  <span class="icon is-left">
-    <i class="fas fa-search"></i>
-  </span>
-</div>
-
-<Error :error />  
-
-{#if !members}
-  <p>Loading</p>
-{:else}
-  <Table
-    filter={filter}
-    data={members}
-    columns={columns}
-    rowUrl={row => `/members/${slugify(row.name)}`}
-  />
-{/if}
+    return await preloadQueries(this.store, queries)
+  }
+}
+</script>
 
 <script>
-import gql from 'graphql-tag';
+  import { onDestroy, onMount } from 'svelte';
+
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {};
+
+  import gql from 'graphql-tag';
 import fuzzysort from 'fuzzysort'
 
 import { status } from 'src/lib/member'
@@ -88,49 +74,65 @@ const queries = [{
 }]
 
 
-export default {
-  components: {
-    Table: 'src/components/Table.html',
-    Error: 'src/components/Error.html',
-  },
-  data() {
-    return {
-      filter: '',
-      // getMembers: subscription(GET_MEMBERS),
-      columns: [
-        { name: 'Alias', field: 'name', component: MemberNameField },
-        { name: 'Name', component: MemberResultField },
-        { name: 'Email', field: 'email' },
-        { name: 'Phone', field: 'phone' },
-        { name: 'Status', field: 'status', component: MemberStatusField },
-      ]
-    }
-  },
-  helpers: {
-    slugify
-  },
-  oncreate() {
-    const role = this.store.roleForPermission('member:read')
-    const { role: prevRole } = this.store.get()
-    this.prevRole = prevRole
-    this.store.set({ role })
+export let filter = '';
+  export let error;
+  export let members;
+  export let columns = [
+  { name: 'Alias', field: 'name', component: MemberNameField },
+  { name: 'Name', component: MemberResultField },
+  { name: 'Email', field: 'email' },
+  { name: 'Phone', field: 'phone' },
+  { name: 'Status', field: 'status', component: MemberStatusField },
+];
 
-    loadQueries(this, queries)
-  },
-  ondestroy() {
-    stopQueries(this)
-    
-    this.store.set({ role: this.prevRole })
-  },
-  async preload () {
-    const { loggedIn } = this.store.get()
-    
-    if (!loggedIn) {
-      return this.redirect(302, '/login')
-    } else {
+  import Table from 'src/components/Table.html';
+  import Error from 'src/components/Error.html';
 
-      return await preloadQueries(this.store, queries)
-    }
-  }
-}
+  onMount(() => {
+  const role = __this.store.roleForPermission('member:read')
+  const { role: prevRole } = __this.store.get()
+  __this.prevRole = prevRole
+  __this.store.set({ role })
+
+  loadQueries(this, queries)
+});
+
+  onDestroy(() => {
+  stopQueries(this)
+  
+  __this.store.set({ role: __this.prevRole })
+});
 </script>
+
+{#if $permissions.includes('member:create')}
+  <div class="field is-grouped">
+    <p class="control">
+      <a href='/members/create' rel=prefetch class="button is-primary">
+        <span class="icon">
+          <i class="fas fa-plus"></i>
+        </span>
+        <span>Create</span>
+      </a>
+    </p>
+  </div>
+{/if}
+
+<div class="control has-icons-left has-icons-right">
+  <input class="input is-medium" type="text" placeholder="Zoek..." bind:value='{filter}'>
+  <span class="icon is-left">
+    <i class="fas fa-search"></i>
+  </span>
+</div>
+
+<Error :error />  
+
+{#if !members}
+  <p>Loading</p>
+{:else}
+  <Table
+    filter={filter}
+    data={members}
+    columns={columns}
+    rowUrl={row => `/members/${slugify(row.name)}`}
+  />
+{/if}

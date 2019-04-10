@@ -1,3 +1,62 @@
+<script>
+  import { beforeUpdate } from 'svelte';
+
+  // [svelte-upgrade suggestion]
+  // manually refactor all references to __this
+  const __this = {};
+
+  import { goto } from '../../__sapper__/client.js'
+  import * as levenshtein from 'fast-levenshtein'
+  import fuzzysort from 'fuzzysort'
+
+  export let columns;
+  export let searching;
+  export let data;
+  export let filteredData = [];
+  export let rowUrl;
+  export let filter = '';
+
+  // [svelte-upgrade suggestion]
+  // review these functions and remove unnecessary 'export' keywords
+  export function gotoRow(row) {
+    if (rowUrl)
+      goto(rowUrl(row))
+  }
+
+  // [svelte-upgrade warning]
+  // beforeUpdate and afterUpdate handlers behave
+  // differently to their v2 counterparts
+  beforeUpdate(() => {
+    if (changed.data || changed.filter) {
+      const { data, filter } = current
+      if (filter.length > 1) {
+        searching = true
+        console.log("Searching", filter)
+
+        if (__this.sorter) {
+          console.log('removing old ones')
+          __this.sorter.cancel()
+        }
+
+        __this.sorter = fuzzysort.goAsync(filter, data, {
+          limit: 20,
+          keys: ['name', 'fullname'],
+          allowTypo: false
+        })
+          .then(res => {
+            console.log("Done ->")
+            delete __this.sorter
+            searching = false, filteredData = res
+          })
+
+      } else {
+        filteredData = data.map(obj => ({ obj }))
+        
+      }
+    }
+  });
+</script>
+
 <table class='table is-fullwidth'>
   <thead>
     <tr>
@@ -14,7 +73,7 @@
       <tr><td>No members found.</td></tr>
     {:else}
       {#each filteredData as result (result.obj.id)}
-        <tr style="{ (result.obj.distance != undefined) && `background: rgba(0, 255, 150, ${1/(result.obj.distance+1)})`}" class:clickable='!!rowUrl' on:click="gotoRow(result.obj)">
+        <tr style="{ (result.obj.distance != undefined) && `background: rgba(0, 255, 150, ${1/(result.obj.distance+1)})`}" class:clickable='{!!rowUrl}' on:click="{() => gotoRow(result.obj)}">
           {#each columns as column}
             <td>
               {#if column.component}
@@ -51,62 +110,3 @@
     cursor: pointer;
   }
 </style>
-
-<script>
-  import { goto } from '../../__sapper__/client.js'
-  import * as levenshtein from 'fast-levenshtein'
-  import fuzzysort from 'fuzzysort'
-
-  export default {
-    data() {
-      return {
-        filter: '',
-        filteredData: []
-      }
-    },
-    helpers: {
-      Function,
-    },
-    methods: {
-      gotoRow (row) {
-        const { rowUrl } = this.get()
-        if (rowUrl)
-          goto(rowUrl(row))
-      }
-    },
-    onstate ({ changed, current }) {
-      if (changed.data || changed.filter) {
-        const { data, filter } = current
-        if (filter.length > 1) {
-          this.set({ searching: true })
-          console.log("Searching", filter)
-
-          if (this.sorter) {
-            console.log('removing old ones')
-            this.sorter.cancel()
-          }
-
-          this.sorter = fuzzysort.goAsync(filter, data, {
-            limit: 20,
-            keys: ['name', 'fullname'],
-            allowTypo: false
-          })
-            .then(res => {
-              console.log("Done ->")
-              delete this.sorter
-              this.set({
-                searching: false,
-                filteredData: res
-              })
-            })
-
-        } else {
-          this.set({
-            filteredData: data.map(obj => ({ obj }))
-          })
-          
-        }
-      }
-    },
-  }
-</script>
