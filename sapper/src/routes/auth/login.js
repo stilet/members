@@ -2,23 +2,25 @@ import bcrypt from 'bcryptjs'
 import gql from 'graphql-tag'
 
 import { createToken, serverToken, createRefreshToken } from 'src/lib/jwt'
-import createStore from 'src/stores'
+import { url, token, role, gqlQuery } from '@dxlb/svelte-graphql-store'
+
 
 const {
-  GRAPHQL_LOCAL_URI,
-  COOKIE_DOMAIN = 'wolbodo.nl',
-  COOKIE_SECURE = true
+  GRAPHQL_LOCAL_URI = 'http://members-graphql-1.dev.dock/v1alpha1/graphql',
+  COOKIE_DOMAIN = 'dev.dock',
+  COOKIE_SECURE = false
 } = process.env
+console.log("URI:", GRAPHQL_LOCAL_URI)
+
+url.set(GRAPHQL_LOCAL_URI)
 
 export async function post (req, res) {
-  const store = createStore({
-    graphqlUri: GRAPHQL_LOCAL_URI,
-    token: serverToken('server:login', 'server'),
-    role: 'server'
-  })
+
+  token.set(serverToken('server:login', 'server'))
+  role.set('server')
 
   try {
-    const result = await store.gqlQuery({
+    const result = await gqlQuery({
       query: gql`
         query($email: String) {
           active_member(where:{email:{_eq:$email}}) {
@@ -35,6 +37,7 @@ export async function post (req, res) {
         email: req.body.email
       }
     })
+    console.log("Got result:", req.body, result)
     const { active_member: [member ] } = result.data
 
     if (member) {

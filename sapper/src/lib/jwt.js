@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken'
 
 export function createToken (user, defaultRole = 'user') {
-  const SECRET = JSON.parse(process.env.AUTH_JWT_SECRET)
+  const SECRET = JSON.parse(process.env.AUTH_JWT_SECRET || '{"type":"HS256","key":"secrsecrsecrsecrsecrsecrsecrsecr"}')
   const roles = (user.member_roles || []).map(mr => mr.role && mr.role.name)
 
   defaultRole = roles.includes('admin') ? 'admin' : defaultRole

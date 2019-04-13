@@ -1,3 +1,29 @@
+<script context="module">
+  import { get } from 'svelte/store'
+  import { loggedIn }  from 'src/stores/auth'
+
+  export function preload({ query }) {
+    // Check login status, and redirect to next of necessary
+    // const { loggedIn } = this.store.get()
+    const { host, uri } = query
+
+    console.log("User logged in:", get(loggedIn))
+
+    if (get(loggedIn)) {
+      if (host) {
+        this.redirect("302", `https://${host}${uri}`)
+      } else {
+        this.redirect("302", '/members')
+      }
+    } else {
+      this.redirect("302", '/login')
+      return {
+        host, uri
+      }
+    }
+  }
+</script>
+
 <script>
   import { time } from 'src/stores/time'
 </script>

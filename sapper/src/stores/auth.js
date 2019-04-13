@@ -4,6 +4,8 @@
 // import slugify from 'src/lib/slugify'
 
 import { readable } from 'svelte/store'
+
+import { notify } from 'src/stores/notifications'
 // import { goto } from '../../__sapper__/client.js'
 
 // const { fetch } = fetchPonyfill()
@@ -21,6 +23,41 @@ const PERMISSIONS_MAP = {
 
 export const loggedIn = readable(false)
 
+
+export async function login(email, password) {
+  const res = await fetch('/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      email,
+      password
+    })
+  })
+
+  const data = await res.json()
+
+  if (res.ok) {
+    notify('info', 'Login okay')
+
+    // __this.store.set({
+    //   token: data.token,
+    //   user: data.user,
+    //   refreshToken: data.refreshToken
+    // })
+
+    // if (host) {
+    //   goto(`https://${host}${uri}`, { replaceState: true })
+    // } else {
+    //   goto('/', { replaceState: true })
+    // }
+    
+  } else {
+    notify('error', 'Incorrect login details')
+    throw new Error(data)
+  }
+}
 
 // constructor (init) {
 //   const lsData = {}

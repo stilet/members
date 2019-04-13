@@ -26,14 +26,10 @@
 <script>
   import gql from 'graphql-tag'
 
-  import { notify } from 'src/stores/notifications'
-  
+  import { login } from 'src/stores/auth'
+
   import InputField from 'src/components/InputField.html'
   import Error from 'src/components/Error.html';
-
-  // [svelte-upgrade suggestion]
-  // manually refactor all references to __this
-  const __this = {};
 
   // import {
   //   EmailField,
@@ -42,69 +38,40 @@
 
   // import { goto } from '../../../__sapper__/client.js'
 
-  export let loading;
-  export let email = '';
-  export let password = '';
-  export let error;
-  export let host;
-  export let uri;
+  let email = '';
+  let password = '';
 
+  let loading;
+  let error;
+  let host;
+  let uri;
 
-  // [svelte-upgrade suggestion]
-  // review these functions and remove unnecessary 'export' keywords
-  export async function login(e) {
+  async function doLogin(event) {
+    event.preventDefault()
+    event.stopPropagation()
 
-    e.preventDefault()
-    e.stopPropagation()
+    loading = true
     try {
-      loading = true
-      const res = await fetch('/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          password
-        })
-      })
-
-      const data = await res.json()
-
-      loading = false
-      if (res.ok) {
-        notify('info', 'Login okay')
-
-        // __this.store.set({
-        //   token: data.token,
-        //   user: data.user,
-        //   refreshToken: data.refreshToken
-        // })
-
-        // if (host) {
-        //   goto(`https://${host}${uri}`, { replaceState: true })
-        // } else {
-        //   goto('/', { replaceState: true })
-        // }
-
-      } else {
-        error = data
-        notify('error', 'Incorrect login details')
-      }
+      console.log("Logging in:", email, password)
+      await login(email, password)
     } catch (e) {
-      console.error(e)
+      console.error("Error logging in:", e)
     }
+    loading = false
   }
 </script>
 
 <section>
-  <form on:submit='{login}'>
+  <form on:submit='{doLogin}'>
     <InputField horizontal
       type='email'
       disabled={loading}
       label='Email'
       value={email || ''}
-      on:change="{event => email = event.detail.value}"
+      on:change="{event => {
+        console.log(event)
+        email = event.detail.value
+      }}"
     />
     <InputField horizontal
       type='password'

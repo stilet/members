@@ -100,11 +100,15 @@ export default {
         preprocess: sveltePreprocessor
       }),
       resolve(),
-      commonjs()
+      commonjs({
+        'node_modules/subscriptions-transport-ws/dist/index.js': ['SubscriptionClient']
+      })
     ],
     external: Object.keys(pkg.dependencies).concat(
       require('module').builtinModules || Object.keys(process.binding('natives'))
-    ),
+    )
+      .filter(name => !name.startsWith('@dxlb/svelte-')),
+
   },
 
   serviceworker: {

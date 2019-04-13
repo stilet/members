@@ -1,6 +1,8 @@
 
 <script>
-  import { createEventDispatcher } from 'svelte'
+  import { createEventDispatcher, onMount } from 'svelte'
+
+  let inputNode
 
   export let horizontal = false
   export let disabled = false
@@ -11,16 +13,26 @@
 
   const dispatch = createEventDispatcher()
 
-  function inputUpdate(e) {
-    e.preventDefault()
-    e.stopPropagation()
-
-    value = e.target.value
+  function update(newValue) {
+    value = newValue
 
     dispatch('change', {
       value
     })
   }
+
+  function inputUpdate(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    update(e.target.value)
+  }
+
+  onMount(() => {
+    if (inputNode.value) {
+      update(inputNode.value)
+    }
+  })
 
 </script>
 
@@ -31,7 +43,7 @@
   <div class="field-body">
     <div class="field">
       <div class="control">
-        <input class="input" {type} {placeholder} on:change={inputUpdate}>
+        <input bind:this={inputNode} class="input" {type} {placeholder} on:input={inputUpdate}>
       </div>
     </div>
   </div>
