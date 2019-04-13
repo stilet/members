@@ -5,14 +5,9 @@
   export let result;
   export let row;
 
-  export let value;
-  $: {
-    if (result && result.length) {
-      value = highlight(result[0], row.name)
-    } else {
-      return row.name
-    }
-  }
+  $: value = (result && result.length) ?
+                highlight(result[0], row.name)
+                : row.name
 </script>
 
 <a href='/members/{slugify(row.name)}' rel=prefetch>

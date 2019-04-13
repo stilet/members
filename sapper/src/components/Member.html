@@ -86,27 +86,13 @@
   export let showPassword = false;
   export let passwordSaving;
   export let loading;
-  export let isSelf;
-  export let rolesDirty;
-  export let memberRoles;
 
-  export let memberRoles;
   $: memberRoles = member.member_roles.map(ur => ur.role);
-
-  export let isSelf;
   $: isSelf = $user && ($user.name === member.name);
-
-  export let showSaveBar;
   $: showSaveBar = rolesDirty || openForms.size > 0 || formsDirty;
-
-  export let formsDirty;
   $: formsDirty = rolesDirty || (identityChanges.size > 0) || (addressChanges.size > 0) || (password !== '');
-
-  export let rolesDirty;
   $: rolesDirty = ((selectedRoles||[]).length !== memberRoles.length)
         || selectedRoles.some(r => !memberRoles.some(mr => mr.name === r.name));
-
-  export let canEdit;
   $: canEdit = isSelf || $permissions.includes('member:update');
 
   import Form from './Form.html';
@@ -344,9 +330,9 @@
           <MemberStatusField row={member} />
 <!--           {#if memberStatus.status === 'retired'}
             Lid van: {memberStatus.start.format('D MMM YYYY')} tot {memberStatus.end.format('D MMM YYYY')}
-          {:elseif memberStatus.status === 'future'}
+          {:else if memberStatus.status === 'future'}
             Lid vanaf: {memberStatus.start.format('D MMM YYYY')}
-          {:elseif memberStatus.status === 'current'}
+          {:else if memberStatus.status === 'current'}
             Lid sinds: {memberStatus.start.format('D MMM YYYY')}
           {:else}
             Aspirant lid

@@ -1,5 +1,8 @@
 <script>
-  import { fly } from 'svelte-transitions';
+  import { fly } from 'svelte-transitions'
+  import { onMount } from 'svelte'
+
+  import { queue, notify, remove } from 'src/stores/notifications'
 
   function notifyType(type) {
     return {
@@ -9,25 +12,40 @@
       info: 'info'
     }[type] || 'info'
   }
+
+  function later(time) {
+    return new Promise((resolve, reject) => {
+      window.setTimeout(resolve, time)
+    })
+  }
+
+  onMount(async () => {
+    notify('success', 'Hey there, this is gold')
+    await later(1000)
+    notify('error', 'Hey there, this is wrong')
+    await later(500)
+    notify('warning', 'Hey there, this is scary')
+    await later(500)
+    notify('info', 'Hey there, I\'m there for you')
+  })
+
 </script>
 
-{#if $notifyQueue}
-  <div class='notifications'>
-    <section class='container'>
-      {#each Array.from($notifyQueue.entries()) as [time, notification] (time)}
-        <div transition:fly="{{y: 200, duration: 200}}" class="notification is-{notifyType(notification.type)}">
-          <button class="button delete" on:click="{() => $notifyRemove(time)}">
-            <span class="icon is-small">
-              <i class="fas fa-times"></i>
-            </span>
-          </button>
-          {notification.message}
-          <hr />
-        </div>
-      {/each}
-    </section>
-  </div>
-{/if}
+<div class='notifications'>
+  <section class='container'>
+    {#each $queue as notification (notification.id)}
+      <div transition:fly="{{y: 200, duration: 200}}" class="notification is-{notifyType(notification.type)}">
+        <button class="button delete" on:click="{() => remove(notification)}">
+          <span class="icon is-small">
+            <i class="fas fa-times"></i>
+          </span>
+        </button>
+        {notification.message}
+        <hr />
+      </div>
+    {/each}
+  </section>
+</div>
 
 <style>
 .notifications {

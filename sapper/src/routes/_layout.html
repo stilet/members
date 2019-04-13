@@ -1,34 +1,28 @@
 <script>
-	import { onDestroy, onMount } from 'svelte';
+	// import { onDestroy, onMount } from 'svelte';
 
 	// [svelte-upgrade suggestion]
 	// manually refactor all references to __this
-	const __this = {};
+	// const __this = {};
 
 	export let segment;
-	export let preloading;
 
 	import Nav from 'src/components/Nav.html';
 	import Notifications from 'src/components/Notifications.html';
 
-	onMount(() => {
-		// __this.stopWatch = __this.store.watchAuth()
-	});
+	// onMount(() => {
+	// 	// __this.stopWatch = __this.store.watchAuth()
+	// });
 
-	onDestroy(() => {
-		// __this.stopWatch()
-	});
+	// onDestroy(() => {
+	// 	// __this.stopWatch()
+	// });
 </script>
 
 <Nav {segment} />
 
-
 <main class='container'>
-	{#if preloading}
-		<p>Loading ...</p>
-	{:else}
-		<svelte:component this={child.component} {...child.props}/>
-	{/if}
+	<slot />
 </main>
 
 

@@ -2,7 +2,7 @@ import * as sapper from '@sapper/app';
 
 // import createStore from './stores'
 
-// import 'src/style/main.scss'
+import './style/main.scss'
 
 sapper.start({
   target: document.querySelector('#sapper'),

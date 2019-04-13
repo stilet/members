@@ -1,15 +1,20 @@
+<!--
 <script context="module">
-    export function preload() {
-  const { loggedIn } = this.store.get()
-  if (loggedIn) {
-    this.redirect(302, '/members')
-  } else {
-    this.redirect(302, '/login')
+  export function preload() {
+    const { loggedIn } = this.store.get()
+    if (loggedIn) {
+      this.redirect(302, '/members')
+    } else {
+      this.redirect(302, '/login')
+    }
+    return {}
   }
-  return {}
-}
 </script>
+-->
 
 <svelte:head>
 	<title>Wolbodo</title>
 </svelte:head>
+
+
+<h1>Welcome</h1>

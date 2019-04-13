@@ -1,8 +1,12 @@
-<script>
-  // [svelte-upgrade suggestion]
-  // manually refactor all references to __this
-  const __this = {};
+<script context=module>
+  import { readable } from 'svelte/store'
 
+  const permissions = readable([])
+  const loggedIn = readable(false)
+  const user = readable(false)
+</script>
+
+<script>
   import slugify from 'src/lib/slugify'
 
 	export let child;
@@ -10,16 +14,21 @@
   export let loading;
 
   export let breadcrumbs;
-  $: breadcrumbs = child.props.path.split('/')
-          .splice(1)
-          .map((name, i, arr) => ({ name, path: `/${[...arr.splice(0,i), name].join('/')}` }));
+  $: breadcrumbs = child ? (
+            child.props.path.split('/')
+            .splice(1)
+            .map((name, i, arr) => ({ name, path: `/${[...arr.splice(0,i), name].join('/')}` }))
+          ) : (
+            []
+          )
 
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords
-  export async function logout() {
+  async function logout() {
     try {
       loading = true
-      await __this.store.logout()
+      console.log("Should logout now")
+      // await __this.store.logout()
       loading = false
     } catch (e) {
       loading = false

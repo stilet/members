@@ -82,7 +82,7 @@
                 {:else}
                   <svelte:component this={column.component} row={result.obj} {column} {result} />
                 {/if}
-              {:elseif column.field instanceof Function}
+              {:else if column.field instanceof Function}
                 {column.field(result.obj, result)}
               {:else}
                 {#if result.obj[column.field] === null}

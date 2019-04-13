@@ -46,7 +46,7 @@
         disabled={loading}
         on:change="{event => change(name, event)}"
       />
-    {:elseif type === 'number'}
+    {:else if type === 'number'}
       <InputControl
         type='number'
         {required} {label}

@@ -5,13 +5,9 @@
   export let row;
 
   export let value;
-  $: {
-    if (result && result.length) {
-      value = highlight(result[1], row.fullname)
-    } else {
-      return row.fullname
-    }
-  }
+  $: value = (result && result.length) ? 
+                highlight(result[1], row.fullname)
+                : row.fullname
 </script>
 
 <span>
