@@ -17,7 +17,7 @@ const dev = NODE_ENV === 'development';
 import moment from 'moment'
 
 import { parseToken } from 'src/lib/jwt'
-import createStore from 'src/stores'
+// import createStore from 'src/stores'
 
 function authorize(req, res, next) {
   const cookie = (req.headers.cookie || '')
@@ -56,14 +56,14 @@ polka() // You can also use Express
     authorize,
     bodyParser.json(),
 		sapper.middleware({
-      store: request => {
-        return createStore({
-          server: true, // ugly
-          graphqlUri: process.env.GRAPHQL_LOCAL_URI,
-          token: request.token,
-          memberFilter: '',
-        })
-      }
+      // store: request => {
+      //   return createStore({
+      //     server: true, // ugly
+      //     graphqlUri: process.env.GRAPHQL_LOCAL_URI,
+      //     token: request.token,
+      //     memberFilter: '',
+      //   })
+      // }
     })
 	)
 	.listen(PORT, err => {
