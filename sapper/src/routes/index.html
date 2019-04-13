@@ -1,20 +1,10 @@
-<!--
-<script context="module">
-  export function preload() {
-    const { loggedIn } = this.store.get()
-    if (loggedIn) {
-      this.redirect(302, '/members')
-    } else {
-      this.redirect(302, '/login')
-    }
-    return {}
-  }
+<script>
+  import { time } from 'src/stores/time'
 </script>
--->
 
 <svelte:head>
 	<title>Wolbodo</title>
 </svelte:head>
 
 
-<h1>Welcome</h1>
+<h1>Welcome to the members system. ({$time.toString()})</h1>

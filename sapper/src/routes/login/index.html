@@ -1,12 +1,15 @@
 <script context="module">
+  import { get } from 'svelte/store'
+  import { loggedIn }  from 'src/stores/auth'
+
   export function preload({ query }) {
     // Check login status, and redirect to next of necessary
-    const { loggedIn } = this.store.get()
+    // const { loggedIn } = this.store.get()
     const { host, uri } = query
 
-    console.log("User logged in:", loggedIn)
+    console.log("User logged in:", get(loggedIn))
 
-    if (loggedIn) {
+    if (get(loggedIn)) {
       if (host) {
         this.redirect("302", `https://${host}${uri}`)
       } else {
@@ -21,17 +24,23 @@
 </script>
 
 <script>
+  import gql from 'graphql-tag'
+
+  import { notify } from 'src/stores/notifications'
+  
+  import InputField from 'src/components/InputField.html'
+  import Error from 'src/components/Error.html';
+
   // [svelte-upgrade suggestion]
   // manually refactor all references to __this
   const __this = {};
 
-  import {
-    EmailField,
-    PasswordField
-  } from 'svelte-bulma-forms/module'
+  // import {
+  //   EmailField,
+  //   PasswordField
+  // } from 'svelte-bulma-forms/module'
 
-  import { goto } from '../../../__sapper__/client.js'
-  import gql from 'graphql-tag'
+  // import { goto } from '../../../__sapper__/client.js'
 
   export let loading;
   export let email = '';
@@ -40,7 +49,6 @@
   export let host;
   export let uri;
 
-  import Error from 'src/components/Error.html';
 
   // [svelte-upgrade suggestion]
   // review these functions and remove unnecessary 'export' keywords
@@ -65,21 +73,23 @@
 
       loading = false
       if (res.ok) {
-        __this.store.set({
-          token: data.token,
-          user: data.user,
-          refreshToken: data.refreshToken
-        })
+        notify('info', 'Login okay')
 
-        if (host) {
-          goto(`https://${host}${uri}`, { replaceState: true })
-        } else {
-          goto('/', { replaceState: true })
-        }
+        // __this.store.set({
+        //   token: data.token,
+        //   user: data.user,
+        //   refreshToken: data.refreshToken
+        // })
+
+        // if (host) {
+        //   goto(`https://${host}${uri}`, { replaceState: true })
+        // } else {
+        //   goto('/', { replaceState: true })
+        // }
 
       } else {
         error = data
-        __this.store.notify('error', 'Incorrect login details')
+        notify('error', 'Incorrect login details')
       }
     } catch (e) {
       console.error(e)
@@ -89,13 +99,15 @@
 
 <section>
   <form on:submit='{login}'>
-    <EmailField horizontal
+    <InputField horizontal
+      type='email'
       disabled={loading}
       label='Email'
       value={email || ''}
-      on:change="{event => email = event}"
+      on:change="{event => email = event.detail.value}"
     />
-    <PasswordField horizontal
+    <InputField horizontal
+      type='password'
       disabled={loading}
       label='Password'
       value={password || ''}
@@ -103,7 +115,7 @@
         message: 'Your password must be at least 5 characters long',
         rule: /\S{5,}/
       }}
-      on:change="{event => password = event}"
+      on:change="{event => password = event.detail.value}"
     />
     <div class="buttons is-right">
       <button type=submit class="button is-link" class:is-loading='{loading}' disabled="{loading}">Login</button>
@@ -112,6 +124,6 @@
     <a href='/login/reset' class='is-link'>Forgot your password?</a>
   </form>
 
-  <Error :error />  
+  <Error {error} />  
 
 </section>

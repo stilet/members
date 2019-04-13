@@ -1,0 +1,38 @@
+
+<script>
+  import { createEventDispatcher } from 'svelte'
+
+  export let horizontal = false
+  export let disabled = false
+  export let label = 'Label'
+  export let type = 'text'
+  export let value = ''
+  export let placeholder = ''
+
+  const dispatch = createEventDispatcher()
+
+  function inputUpdate(e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    value = e.target.value
+
+    dispatch('change', {
+      value
+    })
+  }
+
+</script>
+
+<div class="field" class:is-horizontal={horizontal}>
+  <div class="field-label is-normal">
+    <label class="label">{label}</label>
+  </div>
+  <div class="field-body">
+    <div class="field">
+      <div class="control">
+        <input class="input" {type} {placeholder} on:change={inputUpdate}>
+      </div>
+    </div>
+  </div>
+</div>

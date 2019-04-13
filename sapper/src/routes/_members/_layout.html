@@ -1,0 +1,15 @@
+
+<script context="module">
+  import { get } from 'svelte/store'
+  import { loggedIn } from 'src/stores/auth'
+
+  export function preload() {
+    if (!get(loggedIn)) {
+      console.log("Hey -> to login", get(loggedIn))
+      this.redirect(302, '/login')
+    }
+    return {}
+  }
+</script>
+
+<slot />

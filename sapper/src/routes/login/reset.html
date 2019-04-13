@@ -1,7 +1,8 @@
 <script>
-  import { EmailField } from 'svelte-bulma-forms/module'
+  import InputField from 'src/components/InputField.html'
 
-  import { goto } from '../../../__sapper__/client.js'
+  import { notify } from 'src/stores/notifications'
+  // import { goto } from '../../../__sapper__/client.js'
 
   export let resetEmail;
   export let resetPending = false;
@@ -20,12 +21,14 @@
       })
     })
     resetPending = false
-    goto('/login/reset-received')
+    notify('info', 'Reset received')
+    // goto('/login/reset-received')
   }
 </script>
 
 <form on:submit|stopPropagation|preventDefault='{() => resetPassword(resetEmail)}'>
-  <EmailField horizontal
+  <InputField horizontal
+    type='email'
     disabled={resetPending}
     label='Email'
     value={resetEmail || ''}
