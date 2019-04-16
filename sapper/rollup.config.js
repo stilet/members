@@ -57,7 +57,9 @@ export default {
         emitCss: true,
         preprocess: sveltePreprocessor
       }),
-      resolve(),
+      resolve({
+        mainFields: ["module", "browser"]
+      }),
       commonjs(),
 
       legacy && babel({
@@ -100,9 +102,7 @@ export default {
         preprocess: sveltePreprocessor
       }),
       resolve(),
-      commonjs({
-        'node_modules/subscriptions-transport-ws/dist/index.js': ['SubscriptionClient']
-      })
+      commonjs()
     ],
     external: Object.keys(pkg.dependencies).concat(
       require('module').builtinModules || Object.keys(process.binding('natives'))

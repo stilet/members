@@ -68,10 +68,7 @@
       disabled={loading}
       label='Email'
       value={email || ''}
-      on:change="{event => {
-        console.log(event)
-        email = event.detail.value
-      }}"
+      on:change="{event => email = event.detail.value}"
     />
     <InputField horizontal
       type='password'

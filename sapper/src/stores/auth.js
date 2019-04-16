@@ -3,9 +3,10 @@
 // import { parseToken } from 'src/lib/jwt'
 // import slugify from 'src/lib/slugify'
 
-import { readable } from 'svelte/store'
+import { readable, writable } from 'svelte/store'
 
-import { notify } from 'src/stores/notifications'
+import { token } from './graphql'
+import { notify } from './notifications'
 // import { goto } from '../../__sapper__/client.js'
 
 // const { fetch } = fetchPonyfill()
@@ -22,6 +23,7 @@ const PERMISSIONS_MAP = {
 }
 
 export const loggedIn = readable(false)
+export const user = writable()
 
 
 export async function login(email, password) {
@@ -41,6 +43,8 @@ export async function login(email, password) {
   if (res.ok) {
     notify('info', 'Login okay')
 
+    user.set(data.user)
+    token.set(data.token)
     // __this.store.set({
     //   token: data.token,
     //   user: data.user,

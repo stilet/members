@@ -2,15 +2,13 @@ import bcrypt from 'bcryptjs'
 import gql from 'graphql-tag'
 
 import { createToken, serverToken, createRefreshToken } from 'src/lib/jwt'
-import { url, token, role, gqlQuery } from '@dxlb/svelte-graphql-store'
-
+import { url, token, role, gqlQuery } from 'src/stores/graphql'
 
 const {
   GRAPHQL_LOCAL_URI = 'http://members-graphql-1.dev.dock/v1alpha1/graphql',
   COOKIE_DOMAIN = 'dev.dock',
   COOKIE_SECURE = false
 } = process.env
-console.log("URI:", GRAPHQL_LOCAL_URI)
 
 url.set(GRAPHQL_LOCAL_URI)
 
