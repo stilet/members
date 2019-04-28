@@ -2,11 +2,9 @@ import { writable, get } from 'svelte/store'
 import moment from 'moment'
 
 export const queue = writable([], () => {
-  try {
+  if (process.browser) {
     const interval = window.setInterval(() => cleanup(), 100)
     return () => window.clearInterval(interval)
-  } catch (e) {
-    console.log("No window")
   }
 })
 
@@ -18,7 +16,7 @@ export function notify (type, message) {
   queue.update(queue => {
     queue.push({
       id: notificationId++,
-      time: moment(),
+      time: Date.now(),
       type, message
     })
     return queue
