@@ -9,50 +9,50 @@ services:
     volumes:
       - db_data:/var/lib/postgresql/data
 
-  graphql:
-    image: hasura/graphql-engine:latest
-    ports:
-      - "8010:80"
-    depends_on:
-      - postgres
-    restart: always
-    command: >
-      /bin/sh -c "
-      graphql-engine \
-        --host postgres \
-        --port 5432 \
-        --user $POSTGRES_USER \
-        --password $POSTGRES_PASSWORD \
-        --dbname $POSTGRES_DB \
-        serve \
-        --server-port 80 \
-        --access-key $HASURA_ACCESS_KEY \
-        --jwt-secret $$AUTH_JWT_SECRET \
-        --enable-console;
-      "
-    environment:
-      AUTH_JWT_SECRET: $AUTH_JWT_SECRET
+  # graphql:
+  #   image: hasura/graphql-engine:latest
+  #   ports:
+  #     - "8010:80"
+  #   depends_on:
+  #     - postgres
+  #   restart: always
+  #   command: >
+  #     /bin/sh -c "
+  #     graphql-engine \
+  #       --host postgres \
+  #       --port 5432 \
+  #       --user $POSTGRES_USER \
+  #       --password $POSTGRES_PASSWORD \
+  #       --dbname $POSTGRES_DB \
+  #       serve \
+  #       --server-port 80 \
+  #       --access-key $HASURA_ACCESS_KEY \
+  #       --jwt-secret $$AUTH_JWT_SECRET \
+  #       --enable-console;
+  #     "
+  #   environment:
+  #     AUTH_JWT_SECRET: $AUTH_JWT_SECRET
 
-      VIRTUAL_HOST: api.members.wlbd.nl
-      LETSENCRYPT_HOST: api.members.wlbd.nl
-      LETSENCRYPT_EMAIL: dexter+wlbd@dxlb.nl
+  #     VIRTUAL_HOST: api.members.wlbd.nl
+  #     LETSENCRYPT_HOST: api.members.wlbd.nl
+  #     LETSENCRYPT_EMAIL: dexter+wlbd@dxlb.nl
 
-  sapper:
-    image: registry.gitlab.com/wolbodo/members:latest
-    environment:
-      NODE_ENV: production
-    depends_on:
-      - graphql
-    environment:
-      VIRTUAL_HOST: members.wlbd.nl
-      LETSENCRYPT_HOST: members.wlbd.nl
-      LETSENCRYPT_EMAIL: dexter+wlbd@dxlb.nl
+  # sapper:
+  #   image: registry.gitlab.com/wolbodo/members:latest
+  #   environment:
+  #     NODE_ENV: production
+  #   depends_on:
+  #     - graphql
+  #   environment:
+  #     VIRTUAL_HOST: members.wlbd.nl
+  #     LETSENCRYPT_HOST: members.wlbd.nl
+  #     LETSENCRYPT_EMAIL: dexter+wlbd@dxlb.nl
 
-      AUTH_JWT_SECRET: $AUTH_JWT_SECRET
-      NODE_ENV: production
-      GRAPHQL_LOCAL_URI: $GRAPHQL_LOCAL_URI
-      GRAPHQL_URI: $GRAPHQL_URI
-      COOKIE_DOMAIN: $COOKIE_DOMAIN
+  #     AUTH_JWT_SECRET: $AUTH_JWT_SECRET
+  #     NODE_ENV: production
+  #     GRAPHQL_LOCAL_URI: $GRAPHQL_LOCAL_URI
+  #     GRAPHQL_URI: $GRAPHQL_URI
+  #     COOKIE_DOMAIN: $COOKIE_DOMAIN
 
 volumes:
   db_data:
