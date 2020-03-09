@@ -1,24 +1,7 @@
 {
   "name": "members",
-  "version": "1.0.0",
-  "description": "Members system ",
-  "main": "index.js",
-  "dependencies": {
-    "graphile": "^4.5.0",
-    "polka": "^0.5.2",
-    "postgraphile": "^4.5.5"
-  },
-  "devDependencies": {
-    "@graphile-contrib/pg-simplify-inflector": "^5.0.0-beta.1"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "graphile": "npx postgraphile --subscriptions --watch --dynamic-json --no-setof-functions-contain-nulls --no-ignore-rbac --no-ignore-indexes --show-error-stack=json --extended-errors hint,detail,errcode --append-plugins @graphile-contrib/pg-simplify-inflector --export-schema-graphql schema.graphql --graphiql '/' --enhance-graphiql --allow-explain --enable-query-batching --legacy-relations omit --connection postgres://postgres:mysecretpassword@members-postgres-1.dev.dock/wolbodo --schema public"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wolbodo/members.git"
-  },
+  "version": "2.0.0",
+  "description": "Members system",
   "keywords": [
     "svelte",
     "sapper",
@@ -29,5 +12,44 @@
   "bugs": {
     "url": "https://github.com/wolbodo/members/issues"
   },
-  "homepage": "https://github.com/wolbodo/members#readme"
+  "homepage": "https://github.com/wolbodo/members#readme",
+  "dependencies": {
+    "compression": "^1.7.1",
+    "graphile": "^4.5.0",
+    "polka": "next",
+    "postgraphile": "^4.5.5",
+    "sirv": "^0.4.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/runtime": "^7.0.0",
+    "@graphile-contrib/pg-simplify-inflector": "^5.0.0-beta.1",
+    "@rollup/plugin-commonjs": "^11.0.0",
+    "@rollup/plugin-node-resolve": "^7.0.0",
+    "@rollup/plugin-replace": "^2.2.0",
+    "npm-run-all": "^4.1.5",
+    "rollup": "^1.20.0",
+    "rollup-plugin-babel": "^4.0.2",
+    "rollup-plugin-svelte": "^5.0.1",
+    "rollup-plugin-terser": "^4.0.4",
+    "sapper": "^0.27.0",
+    "svelte": "^3.0.0"
+  },
+  "scripts": {
+    "dev": "sapper dev",
+    "build": "sapper build --legacy",
+    "export": "sapper export --legacy",
+    "start": "node __sapper__/build",
+    "cy:run": "cypress run",
+    "cy:open": "cypress open",
+    "test": "run-p --race dev cy:run",
+    "graphile": "npx postgraphile --subscriptions --watch --dynamic-json --no-setof-functions-contain-nulls --no-ignore-rbac --no-ignore-indexes --show-error-stack=json --extended-errors hint,detail,errcode --append-plugins @graphile-contrib/pg-simplify-inflector --export-schema-graphql schema.graphql --graphiql '/' --enhance-graphiql --allow-explain --enable-query-batching --legacy-relations omit --connection postgres://postgres:mysecretpassword@members-postgres-1.dev.dock/wolbodo --schema public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wolbodo/members.git"
+  }
 }
