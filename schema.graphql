@@ -1,0 +1,1734 @@
+type ActiveMember {
+  id: Int
+  name: String
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  phone: String
+  address: String
+  zipcode: String
+  city: String
+  country: String
+  bankaccount: String
+  note: String
+  validity: DatetimeRange
+  created: Datetime
+  modified: Datetime
+}
+
+"""An input for mutations affecting `ActiveMember`"""
+input ActiveMemberInput {
+  id: Int
+  name: String
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  phone: String
+  address: String
+  zipcode: String
+  city: String
+  country: String
+  bankaccount: String
+  note: String
+  validity: DatetimeRangeInput
+  created: Datetime
+  modified: Datetime
+}
+
+type ActiveMemberRole {
+  memberId: Int
+  roleId: Int
+  note: String
+  validity: DatetimeRange
+  modified: Datetime
+}
+
+"""An input for mutations affecting `ActiveMemberRole`"""
+input ActiveMemberRoleInput {
+  memberId: Int
+  roleId: Int
+  note: String
+  validity: DatetimeRangeInput
+  modified: Datetime
+}
+
+"""A connection to a list of `ActiveMemberRole` values."""
+type ActiveMemberRolesConnection {
+  """A list of `ActiveMemberRole` objects."""
+  nodes: [ActiveMemberRole!]!
+
+  """
+  A list of edges which contains the `ActiveMemberRole` and cursor to aid in pagination.
+  """
+  edges: [ActiveMemberRolesEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """
+  The count of *all* `ActiveMemberRole` you could get from the connection.
+  """
+  totalCount: Int!
+}
+
+"""A `ActiveMemberRole` edge in the connection."""
+type ActiveMemberRolesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `ActiveMemberRole` at the end of the edge."""
+  node: ActiveMemberRole!
+}
+
+"""Methods to use when ordering `ActiveMemberRole`."""
+enum ActiveMemberRolesOrderBy {
+  NATURAL
+}
+
+"""A connection to a list of `ActiveMember` values."""
+type ActiveMembersConnection {
+  """A list of `ActiveMember` objects."""
+  nodes: [ActiveMember!]!
+
+  """
+  A list of edges which contains the `ActiveMember` and cursor to aid in pagination.
+  """
+  edges: [ActiveMembersEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `ActiveMember` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `ActiveMember` edge in the connection."""
+type ActiveMembersEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `ActiveMember` at the end of the edge."""
+  node: ActiveMember!
+}
+
+"""Methods to use when ordering `ActiveMember`."""
+enum ActiveMembersOrderBy {
+  NATURAL
+}
+
+"""All input for the create `ActiveMember` mutation."""
+input CreateActiveMemberInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `ActiveMember` to be created by this mutation."""
+  activeMember: ActiveMemberInput!
+}
+
+"""The output of our create `ActiveMember` mutation."""
+type CreateActiveMemberPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `ActiveMember` that was created by this mutation."""
+  activeMember: ActiveMember
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `ActiveMember`. May be used by Relay 1."""
+  activeMemberEdge(
+    """The method to use when ordering `ActiveMember`."""
+    orderBy: [ActiveMembersOrderBy!] = [NATURAL]
+  ): ActiveMembersEdge
+}
+
+"""All input for the create `ActiveMemberRole` mutation."""
+input CreateActiveMemberRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `ActiveMemberRole` to be created by this mutation."""
+  activeMemberRole: ActiveMemberRoleInput!
+}
+
+"""The output of our create `ActiveMemberRole` mutation."""
+type CreateActiveMemberRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `ActiveMemberRole` that was created by this mutation."""
+  activeMemberRole: ActiveMemberRole
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `ActiveMemberRole`. May be used by Relay 1."""
+  activeMemberRoleEdge(
+    """The method to use when ordering `ActiveMemberRole`."""
+    orderBy: [ActiveMemberRolesOrderBy!] = [NATURAL]
+  ): ActiveMemberRolesEdge
+}
+
+"""All input for the create `Mail` mutation."""
+input CreateMailInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Mail` to be created by this mutation."""
+  mail: MailInput!
+}
+
+"""The output of our create `Mail` mutation."""
+type CreateMailPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mail` that was created by this mutation."""
+  mail: Mail
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Mail`. May be used by Relay 1."""
+  mailEdge(
+    """The method to use when ordering `Mail`."""
+    orderBy: [MailOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MailEdge
+}
+
+"""All input for the create `Member` mutation."""
+input CreateMemberInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Member` to be created by this mutation."""
+  member: MemberInput!
+}
+
+"""The output of our create `Member` mutation."""
+type CreateMemberPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Member` that was created by this mutation."""
+  member: Member
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Member`. May be used by Relay 1."""
+  memberEdge(
+    """The method to use when ordering `Member`."""
+    orderBy: [MembersOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MembersEdge
+}
+
+"""All input for the create `MemberRole` mutation."""
+input CreateMemberRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `MemberRole` to be created by this mutation."""
+  memberRole: MemberRoleInput!
+}
+
+"""The output of our create `MemberRole` mutation."""
+type CreateMemberRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `MemberRole` that was created by this mutation."""
+  memberRole: MemberRole
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `Member` that is related to this `MemberRole`."""
+  member: Member
+
+  """An edge for our `MemberRole`. May be used by Relay 1."""
+  memberRoleEdge(
+    """The method to use when ordering `MemberRole`."""
+    orderBy: [MemberRolesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MemberRolesEdge
+}
+
+"""All input for the create `Role` mutation."""
+input CreateRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """The `Role` to be created by this mutation."""
+  role: RoleInput!
+}
+
+"""The output of our create `Role` mutation."""
+type CreateRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Role` that was created by this mutation."""
+  role: Role
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Role`. May be used by Relay 1."""
+  roleEdge(
+    """The method to use when ordering `Role`."""
+    orderBy: [RolesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): RolesEdge
+}
+
+"""A location in a connection that can be used for resuming pagination."""
+scalar Cursor
+
+"""
+A point in time as described by the [ISO
+8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
+"""
+scalar Datetime
+
+"""A range of `Datetime`."""
+type DatetimeRange {
+  """The starting bound of our range."""
+  start: DatetimeRangeBound
+
+  """The ending bound of our range."""
+  end: DatetimeRangeBound
+}
+
+"""
+The value at one end of a range. A range can either include this value, or not.
+"""
+type DatetimeRangeBound {
+  """The value at one end of our range."""
+  value: Datetime!
+
+  """Whether or not the value of this bound is included in the range."""
+  inclusive: Boolean!
+}
+
+"""
+The value at one end of a range. A range can either include this value, or not.
+"""
+input DatetimeRangeBoundInput {
+  """The value at one end of our range."""
+  value: Datetime!
+
+  """Whether or not the value of this bound is included in the range."""
+  inclusive: Boolean!
+}
+
+"""A range of `Datetime`."""
+input DatetimeRangeInput {
+  """The starting bound of our range."""
+  start: DatetimeRangeBoundInput
+
+  """The ending bound of our range."""
+  end: DatetimeRangeBoundInput
+}
+
+"""All input for the `deleteMailByNodeId` mutation."""
+input DeleteMailByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Mail` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteMail` mutation."""
+input DeleteMailInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: Int!
+}
+
+"""The output of our delete `Mail` mutation."""
+type DeleteMailPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mail` that was deleted by this mutation."""
+  mail: Mail
+  deletedMailNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Mail`. May be used by Relay 1."""
+  mailEdge(
+    """The method to use when ordering `Mail`."""
+    orderBy: [MailOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MailEdge
+}
+
+"""All input for the `deleteMemberById` mutation."""
+input DeleteMemberByIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: Int!
+}
+
+"""All input for the `deleteMemberByNodeId` mutation."""
+input DeleteMemberByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Member` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteMember` mutation."""
+input DeleteMemberInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  name: String!
+  validity: DatetimeRangeInput!
+}
+
+"""The output of our delete `Member` mutation."""
+type DeleteMemberPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Member` that was deleted by this mutation."""
+  member: Member
+  deletedMemberNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Member`. May be used by Relay 1."""
+  memberEdge(
+    """The method to use when ordering `Member`."""
+    orderBy: [MembersOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MembersEdge
+}
+
+"""All input for the `deleteMemberRoleByNodeId` mutation."""
+input DeleteMemberRoleByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `MemberRole` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteMemberRole` mutation."""
+input DeleteMemberRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  memberId: Int!
+  roleId: Int!
+  validity: DatetimeRangeInput!
+}
+
+"""The output of our delete `MemberRole` mutation."""
+type DeleteMemberRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `MemberRole` that was deleted by this mutation."""
+  memberRole: MemberRole
+  deletedMemberRoleNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `Member` that is related to this `MemberRole`."""
+  member: Member
+
+  """An edge for our `MemberRole`. May be used by Relay 1."""
+  memberRoleEdge(
+    """The method to use when ordering `MemberRole`."""
+    orderBy: [MemberRolesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MemberRolesEdge
+}
+
+"""All input for the `deleteRoleById` mutation."""
+input DeleteRoleByIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  id: Int!
+}
+
+"""All input for the `deleteRoleByNodeId` mutation."""
+input DeleteRoleByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Role` to be deleted.
+  """
+  nodeId: ID!
+}
+
+"""All input for the `deleteRole` mutation."""
+input DeleteRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+  name: String!
+  validity: DatetimeRangeInput!
+}
+
+"""The output of our delete `Role` mutation."""
+type DeleteRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Role` that was deleted by this mutation."""
+  role: Role
+  deletedRoleNodeId: ID
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Role`. May be used by Relay 1."""
+  roleEdge(
+    """The method to use when ordering `Role`."""
+    orderBy: [RolesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): RolesEdge
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+type Mail implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: Int!
+  status: MailStatus
+  memberId: Int!
+  template: String!
+  data: JSON
+  created: Datetime
+}
+
+"""
+A condition to be used against `Mail` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input MailCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+}
+
+"""A connection to a list of `Mail` values."""
+type MailConnection {
+  """A list of `Mail` objects."""
+  nodes: [Mail!]!
+
+  """
+  A list of edges which contains the `Mail` and cursor to aid in pagination.
+  """
+  edges: [MailEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Mail` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Mail` edge in the connection."""
+type MailEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Mail` at the end of the edge."""
+  node: Mail!
+}
+
+"""An input for mutations affecting `Mail`"""
+input MailInput {
+  id: Int
+  status: MailStatus
+  memberId: Int!
+  template: String!
+  data: JSON
+  created: Datetime
+}
+
+"""Methods to use when ordering `Mail`."""
+enum MailOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""Represents an update to a `Mail`. Fields that are set will be updated."""
+input MailPatch {
+  id: Int
+  status: MailStatus
+  memberId: Int
+  template: String
+  data: JSON
+  created: Datetime
+}
+
+enum MailStatus {
+  NEW
+  SENT
+  ERROR
+}
+
+type Member implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: Int!
+  name: String!
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  phone: String
+  address: String
+  zipcode: String
+  city: String
+  country: String
+  bankaccount: String
+  note: String
+  validity: DatetimeRange!
+  created: Datetime
+  modified: Datetime
+
+  """Reads and enables pagination through a set of `MemberRole`."""
+  memberRoles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `MemberRole`."""
+    orderBy: [MemberRolesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MemberRoleCondition
+  ): MemberRolesConnection!
+}
+
+"""
+A condition to be used against `Member` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input MemberCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `name` field."""
+  name: String
+
+  """Checks for equality with the object’s `email` field."""
+  email: String
+}
+
+"""An input for mutations affecting `Member`"""
+input MemberInput {
+  id: Int
+  name: String!
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  phone: String
+  address: String
+  zipcode: String
+  city: String
+  country: String
+  bankaccount: String
+  note: String
+  validity: DatetimeRangeInput
+  created: Datetime
+  modified: Datetime
+}
+
+"""
+Represents an update to a `Member`. Fields that are set will be updated.
+"""
+input MemberPatch {
+  id: Int
+  name: String
+  email: String
+  password: String
+  firstname: String
+  lastname: String
+  phone: String
+  address: String
+  zipcode: String
+  city: String
+  country: String
+  bankaccount: String
+  note: String
+  validity: DatetimeRangeInput
+  created: Datetime
+  modified: Datetime
+}
+
+type MemberRole implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  memberId: Int!
+  roleId: Int!
+  note: String
+  validity: DatetimeRange!
+  modified: Datetime
+
+  """Reads a single `Member` that is related to this `MemberRole`."""
+  member: Member
+}
+
+"""
+A condition to be used against `MemberRole` object types. All fields are tested
+for equality and combined with a logical ‘and.’
+"""
+input MemberRoleCondition {
+  """Checks for equality with the object’s `memberId` field."""
+  memberId: Int
+}
+
+"""An input for mutations affecting `MemberRole`"""
+input MemberRoleInput {
+  memberId: Int!
+  roleId: Int!
+  note: String
+  validity: DatetimeRangeInput
+  modified: Datetime
+}
+
+"""
+Represents an update to a `MemberRole`. Fields that are set will be updated.
+"""
+input MemberRolePatch {
+  memberId: Int
+  roleId: Int
+  note: String
+  validity: DatetimeRangeInput
+  modified: Datetime
+}
+
+"""A connection to a list of `MemberRole` values."""
+type MemberRolesConnection {
+  """A list of `MemberRole` objects."""
+  nodes: [MemberRole!]!
+
+  """
+  A list of edges which contains the `MemberRole` and cursor to aid in pagination.
+  """
+  edges: [MemberRolesEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `MemberRole` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `MemberRole` edge in the connection."""
+type MemberRolesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `MemberRole` at the end of the edge."""
+  node: MemberRole!
+}
+
+"""Methods to use when ordering `MemberRole`."""
+enum MemberRolesOrderBy {
+  NATURAL
+  MEMBER_ID_ASC
+  MEMBER_ID_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""A connection to a list of `Member` values."""
+type MembersConnection {
+  """A list of `Member` objects."""
+  nodes: [Member!]!
+
+  """
+  A list of edges which contains the `Member` and cursor to aid in pagination.
+  """
+  edges: [MembersEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Member` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Member` edge in the connection."""
+type MembersEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Member` at the end of the edge."""
+  node: Member!
+}
+
+"""Methods to use when ordering `Member`."""
+enum MembersOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  NAME_ASC
+  NAME_DESC
+  EMAIL_ASC
+  EMAIL_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""
+The root mutation type which contains root level fields which mutate data.
+"""
+type Mutation {
+  """Creates a single `ActiveMember`."""
+  createActiveMember(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateActiveMemberInput!
+  ): CreateActiveMemberPayload
+
+  """Creates a single `ActiveMemberRole`."""
+  createActiveMemberRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateActiveMemberRoleInput!
+  ): CreateActiveMemberRolePayload
+
+  """Creates a single `Mail`."""
+  createMail(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateMailInput!
+  ): CreateMailPayload
+
+  """Creates a single `Member`."""
+  createMember(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateMemberInput!
+  ): CreateMemberPayload
+
+  """Creates a single `MemberRole`."""
+  createMemberRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateMemberRoleInput!
+  ): CreateMemberRolePayload
+
+  """Creates a single `Role`."""
+  createRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: CreateRoleInput!
+  ): CreateRolePayload
+
+  """Updates a single `Mail` using its globally unique id and a patch."""
+  updateMailByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMailByNodeIdInput!
+  ): UpdateMailPayload
+
+  """Updates a single `Mail` using a unique key and a patch."""
+  updateMail(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMailInput!
+  ): UpdateMailPayload
+
+  """Updates a single `Member` using its globally unique id and a patch."""
+  updateMemberByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMemberByNodeIdInput!
+  ): UpdateMemberPayload
+
+  """Updates a single `Member` using a unique key and a patch."""
+  updateMemberById(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMemberByIdInput!
+  ): UpdateMemberPayload
+
+  """Updates a single `Member` using a unique key and a patch."""
+  updateMember(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMemberInput!
+  ): UpdateMemberPayload
+
+  """
+  Updates a single `MemberRole` using its globally unique id and a patch.
+  """
+  updateMemberRoleByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMemberRoleByNodeIdInput!
+  ): UpdateMemberRolePayload
+
+  """Updates a single `MemberRole` using a unique key and a patch."""
+  updateMemberRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateMemberRoleInput!
+  ): UpdateMemberRolePayload
+
+  """Updates a single `Role` using its globally unique id and a patch."""
+  updateRoleByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateRoleByNodeIdInput!
+  ): UpdateRolePayload
+
+  """Updates a single `Role` using a unique key and a patch."""
+  updateRoleById(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateRoleByIdInput!
+  ): UpdateRolePayload
+
+  """Updates a single `Role` using a unique key and a patch."""
+  updateRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: UpdateRoleInput!
+  ): UpdateRolePayload
+
+  """Deletes a single `Mail` using its globally unique id."""
+  deleteMailByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMailByNodeIdInput!
+  ): DeleteMailPayload
+
+  """Deletes a single `Mail` using a unique key."""
+  deleteMail(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMailInput!
+  ): DeleteMailPayload
+
+  """Deletes a single `Member` using its globally unique id."""
+  deleteMemberByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMemberByNodeIdInput!
+  ): DeleteMemberPayload
+
+  """Deletes a single `Member` using a unique key."""
+  deleteMemberById(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMemberByIdInput!
+  ): DeleteMemberPayload
+
+  """Deletes a single `Member` using a unique key."""
+  deleteMember(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMemberInput!
+  ): DeleteMemberPayload
+
+  """Deletes a single `MemberRole` using its globally unique id."""
+  deleteMemberRoleByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMemberRoleByNodeIdInput!
+  ): DeleteMemberRolePayload
+
+  """Deletes a single `MemberRole` using a unique key."""
+  deleteMemberRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteMemberRoleInput!
+  ): DeleteMemberRolePayload
+
+  """Deletes a single `Role` using its globally unique id."""
+  deleteRoleByNodeId(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteRoleByNodeIdInput!
+  ): DeleteRolePayload
+
+  """Deletes a single `Role` using a unique key."""
+  deleteRoleById(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteRoleByIdInput!
+  ): DeleteRolePayload
+
+  """Deletes a single `Role` using a unique key."""
+  deleteRole(
+    """
+    The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    """
+    input: DeleteRoleInput!
+  ): DeleteRolePayload
+}
+
+"""An object with a globally unique `ID`."""
+interface Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+}
+
+"""Information about pagination in a connection."""
+type PageInfo {
+  """When paginating forwards, are there more items?"""
+  hasNextPage: Boolean!
+
+  """When paginating backwards, are there more items?"""
+  hasPreviousPage: Boolean!
+
+  """When paginating backwards, the cursor to continue."""
+  startCursor: Cursor
+
+  """When paginating forwards, the cursor to continue."""
+  endCursor: Cursor
+}
+
+"""The root query type which gives access points into the data universe."""
+type Query implements Node {
+  """
+  Exposes the root query type nested one level down. This is helpful for Relay 1
+  which can only query top level fields if they are in a particular form.
+  """
+  query: Query!
+
+  """
+  The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`.
+  """
+  nodeId: ID!
+
+  """Fetches an object given its globally unique `ID`."""
+  node(
+    """The globally unique `ID`."""
+    nodeId: ID!
+  ): Node
+
+  """Reads and enables pagination through a set of `ActiveMember`."""
+  activeMembers(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ActiveMember`."""
+    orderBy: [ActiveMembersOrderBy!] = [NATURAL]
+  ): ActiveMembersConnection
+
+  """Reads and enables pagination through a set of `ActiveMemberRole`."""
+  activeMemberRoles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `ActiveMemberRole`."""
+    orderBy: [ActiveMemberRolesOrderBy!] = [NATURAL]
+  ): ActiveMemberRolesConnection
+
+  """Reads and enables pagination through a set of `Mail`."""
+  mails(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Mail`."""
+    orderBy: [MailOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MailCondition
+  ): MailConnection
+
+  """Reads and enables pagination through a set of `Member`."""
+  members(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Member`."""
+    orderBy: [MembersOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MemberCondition
+  ): MembersConnection
+
+  """Reads and enables pagination through a set of `MemberRole`."""
+  memberRoles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `MemberRole`."""
+    orderBy: [MemberRolesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: MemberRoleCondition
+  ): MemberRolesConnection
+
+  """Reads and enables pagination through a set of `Role`."""
+  roles(
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+
+    """The method to use when ordering `Role`."""
+    orderBy: [RolesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    """
+    A condition to be used in determining which values should be returned by the collection.
+    """
+    condition: RoleCondition
+  ): RolesConnection
+  mail(id: Int!): Mail
+  memberById(id: Int!): Member
+  member(name: String!, validity: DatetimeRangeInput!): Member
+  memberRole(memberId: Int!, roleId: Int!, validity: DatetimeRangeInput!): MemberRole
+  roleById(id: Int!): Role
+  role(name: String!, validity: DatetimeRangeInput!): Role
+
+  """Reads and enables pagination through a set of `Member`."""
+  findMember(
+    slug: String
+
+    """Only read the first `n` values of the set."""
+    first: Int
+
+    """Only read the last `n` values of the set."""
+    last: Int
+
+    """
+    Skip the first `n` values from our `after` cursor, an alternative to cursor
+    based pagination. May not be used with `last`.
+    """
+    offset: Int
+
+    """Read all values in the set before (above) this cursor."""
+    before: Cursor
+
+    """Read all values in the set after (below) this cursor."""
+    after: Cursor
+  ): MembersConnection!
+  slugify(value: String!, allowUnicode: Boolean!): String
+
+  """Reads a single `Mail` using its globally unique `ID`."""
+  mailByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Mail`."""
+    nodeId: ID!
+  ): Mail
+
+  """Reads a single `Member` using its globally unique `ID`."""
+  memberByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Member`."""
+    nodeId: ID!
+  ): Member
+
+  """Reads a single `MemberRole` using its globally unique `ID`."""
+  memberRoleByNodeId(
+    """
+    The globally unique `ID` to be used in selecting a single `MemberRole`.
+    """
+    nodeId: ID!
+  ): MemberRole
+
+  """Reads a single `Role` using its globally unique `ID`."""
+  roleByNodeId(
+    """The globally unique `ID` to be used in selecting a single `Role`."""
+    nodeId: ID!
+  ): Role
+}
+
+type Role implements Node {
+  """
+  A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  """
+  nodeId: ID!
+  id: Int!
+  name: String!
+  description: String!
+  validity: DatetimeRange!
+  modified: Datetime
+}
+
+"""
+A condition to be used against `Role` object types. All fields are tested for equality and combined with a logical ‘and.’
+"""
+input RoleCondition {
+  """Checks for equality with the object’s `id` field."""
+  id: Int
+
+  """Checks for equality with the object’s `name` field."""
+  name: String
+}
+
+"""An input for mutations affecting `Role`"""
+input RoleInput {
+  id: Int
+  name: String!
+  description: String!
+  validity: DatetimeRangeInput
+  modified: Datetime
+}
+
+"""Represents an update to a `Role`. Fields that are set will be updated."""
+input RolePatch {
+  id: Int
+  name: String
+  description: String
+  validity: DatetimeRangeInput
+  modified: Datetime
+}
+
+"""A connection to a list of `Role` values."""
+type RolesConnection {
+  """A list of `Role` objects."""
+  nodes: [Role!]!
+
+  """
+  A list of edges which contains the `Role` and cursor to aid in pagination.
+  """
+  edges: [RolesEdge!]!
+
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """The count of *all* `Role` you could get from the connection."""
+  totalCount: Int!
+}
+
+"""A `Role` edge in the connection."""
+type RolesEdge {
+  """A cursor for use in pagination."""
+  cursor: Cursor
+
+  """The `Role` at the end of the edge."""
+  node: Role!
+}
+
+"""Methods to use when ordering `Role`."""
+enum RolesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  NAME_ASC
+  NAME_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+"""All input for the `updateMailByNodeId` mutation."""
+input UpdateMailByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Mail` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Mail` being updated.
+  """
+  patch: MailPatch!
+}
+
+"""All input for the `updateMail` mutation."""
+input UpdateMailInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Mail` being updated.
+  """
+  patch: MailPatch!
+  id: Int!
+}
+
+"""The output of our update `Mail` mutation."""
+type UpdateMailPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Mail` that was updated by this mutation."""
+  mail: Mail
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Mail`. May be used by Relay 1."""
+  mailEdge(
+    """The method to use when ordering `Mail`."""
+    orderBy: [MailOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MailEdge
+}
+
+"""All input for the `updateMemberById` mutation."""
+input UpdateMemberByIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Member` being updated.
+  """
+  patch: MemberPatch!
+  id: Int!
+}
+
+"""All input for the `updateMemberByNodeId` mutation."""
+input UpdateMemberByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Member` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Member` being updated.
+  """
+  patch: MemberPatch!
+}
+
+"""All input for the `updateMember` mutation."""
+input UpdateMemberInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Member` being updated.
+  """
+  patch: MemberPatch!
+  name: String!
+  validity: DatetimeRangeInput!
+}
+
+"""The output of our update `Member` mutation."""
+type UpdateMemberPayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Member` that was updated by this mutation."""
+  member: Member
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Member`. May be used by Relay 1."""
+  memberEdge(
+    """The method to use when ordering `Member`."""
+    orderBy: [MembersOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MembersEdge
+}
+
+"""All input for the `updateMemberRoleByNodeId` mutation."""
+input UpdateMemberRoleByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `MemberRole` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `MemberRole` being updated.
+  """
+  patch: MemberRolePatch!
+}
+
+"""All input for the `updateMemberRole` mutation."""
+input UpdateMemberRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `MemberRole` being updated.
+  """
+  patch: MemberRolePatch!
+  memberId: Int!
+  roleId: Int!
+  validity: DatetimeRangeInput!
+}
+
+"""The output of our update `MemberRole` mutation."""
+type UpdateMemberRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `MemberRole` that was updated by this mutation."""
+  memberRole: MemberRole
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """Reads a single `Member` that is related to this `MemberRole`."""
+  member: Member
+
+  """An edge for our `MemberRole`. May be used by Relay 1."""
+  memberRoleEdge(
+    """The method to use when ordering `MemberRole`."""
+    orderBy: [MemberRolesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): MemberRolesEdge
+}
+
+"""All input for the `updateRoleById` mutation."""
+input UpdateRoleByIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Role` being updated.
+  """
+  patch: RolePatch!
+  id: Int!
+}
+
+"""All input for the `updateRoleByNodeId` mutation."""
+input UpdateRoleByNodeIdInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  The globally unique `ID` which will identify a single `Role` to be updated.
+  """
+  nodeId: ID!
+
+  """
+  An object where the defined keys will be set on the `Role` being updated.
+  """
+  patch: RolePatch!
+}
+
+"""All input for the `updateRole` mutation."""
+input UpdateRoleInput {
+  """
+  An arbitrary string value with no semantic meaning. Will be included in the
+  payload verbatim. May be used to track mutations by the client.
+  """
+  clientMutationId: String
+
+  """
+  An object where the defined keys will be set on the `Role` being updated.
+  """
+  patch: RolePatch!
+  name: String!
+  validity: DatetimeRangeInput!
+}
+
+"""The output of our update `Role` mutation."""
+type UpdateRolePayload {
+  """
+  The exact same `clientMutationId` that was provided in the mutation input,
+  unchanged and unused. May be used by a client to track mutations.
+  """
+  clientMutationId: String
+
+  """The `Role` that was updated by this mutation."""
+  role: Role
+
+  """
+  Our root query field type. Allows us to run any query from our mutation payload.
+  """
+  query: Query
+
+  """An edge for our `Role`. May be used by Relay 1."""
+  roleEdge(
+    """The method to use when ordering `Role`."""
+    orderBy: [RolesOrderBy!] = [PRIMARY_KEY_ASC]
+  ): RolesEdge
+}

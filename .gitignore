@@ -9,3 +9,4 @@ sapper/app/
 .sapper-cache/
 node_modules
 __sapper__
+tmp
