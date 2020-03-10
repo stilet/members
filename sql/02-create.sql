@@ -1,4 +1,3 @@
-
 CREATE TABLE public.member (
   id                SERIAL,
   name              VARCHAR(255)        NOT NULL,
