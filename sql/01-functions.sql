@@ -17,6 +17,7 @@
 -- END
 -- $function$;
 
+
 CREATE OR REPLACE FUNCTION public.update_modified()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -25,6 +26,7 @@ BEGIN
 END;
 $$ language 'plpgsql';
 
+
 CREATE OR REPLACE FUNCTION public.hash_password()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -32,6 +34,7 @@ BEGIN
    RETURN NEW;
 END;
 $$ language 'plpgsql';
+
 
 CREATE OR REPLACE FUNCTION public.notify_password_change()
 RETURNS TRIGGER AS $$
@@ -42,6 +45,7 @@ BEGIN
     (NEW.id, 'password-change');
   RETURN NEW;
 END; $$ LANGUAGE 'plpgsql';
+
 
 CREATE OR REPLACE FUNCTION public.synchronize_membership()
 RETURNS TRIGGER AS $$
@@ -65,7 +69,6 @@ BEGIN
   END IF;
   RETURN NULL;
 END; $$ LANGUAGE 'plpgsql';
-
 
 
 CREATE OR REPLACE FUNCTION slugify("value" TEXT, "allow_unicode" BOOLEAN)
@@ -94,6 +97,7 @@ RETURNS TEXT AS $$
   )
   SELECT "value" FROM "hyphenated";
 $$ LANGUAGE SQL STRICT IMMUTABLE;
+
 
 CREATE OR REPLACE FUNCTION public.slugify_name()
 RETURNS TRIGGER AS $$

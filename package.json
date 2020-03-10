@@ -14,6 +14,7 @@
   },
   "homepage": "https://github.com/wolbodo/members#readme",
   "dependencies": {
+    "apollo-boost": "^0.4.7",
     "compression": "^1.7.1",
     "graphile": "^4.5.0",
     "polka": "next",
@@ -46,7 +47,10 @@
     "cy:run": "cypress run",
     "cy:open": "cypress open",
     "test": "run-p --race dev cy:run",
-    "graphile": "npx postgraphile --subscriptions --watch --dynamic-json --no-setof-functions-contain-nulls --no-ignore-rbac --no-ignore-indexes --show-error-stack=json --extended-errors hint,detail,errcode --append-plugins @graphile-contrib/pg-simplify-inflector --export-schema-graphql schema.graphql --graphiql '/' --enhance-graphiql --allow-explain --enable-query-batching --legacy-relations omit --connection postgres://postgres:mysecretpassword@members-postgres-1.dev.dock/wolbodo --schema public"
+    "compose": "docker-compose",
+    "db:up": "yarn compose up -d",
+    "db:down": "yarn compose down",
+    "db:reset": "yarn db:down; docker volume rm members_db_data; yarn db:up"
   },
   "repository": {
     "type": "git",

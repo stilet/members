@@ -1,3 +1,4 @@
+
 CREATE TABLE public.member (
   id                SERIAL,
   name              VARCHAR(255)        NOT NULL,
@@ -33,6 +34,7 @@ CREATE OR REPLACE VIEW public.active_member AS
   SELECT * FROM public.member
   WHERE (validity @> now());
 
+
 -- View function for use in hasura
 CREATE FUNCTION find_member(slug text)
 RETURNS SETOF member AS $$
@@ -55,6 +57,7 @@ CREATE TABLE public.role (
   UNIQUE (id)
 );
 
+
 CREATE TABLE public.member_role (
   member_id         INTEGER             NOT NULL REFERENCES public.member(id),
   role_id           INTEGER             NOT NULL REFERENCES public.role(id),
@@ -65,6 +68,7 @@ CREATE TABLE public.member_role (
   EXCLUDE USING gist (member_id WITH =, role_id WITH =, validity WITH &&),
   PRIMARY KEY (member_id, role_id, validity)
 );
+
 CREATE RULE catch_member_role_delete AS ON DELETE TO public.member_role
   DO INSTEAD 
     UPDATE public.member_role
@@ -95,5 +99,4 @@ CREATE TABLE public.mail (
   created           TIMESTAMPTZ         DEFAULT NOW(),
 
   PRIMARY KEY (id)
-
 );

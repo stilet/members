@@ -37,6 +37,8 @@ polka() // You can also use Express
 					// TODO: customise condition!
 					return true;
 				},
+				jwtSecret: 'secret',
+				jwtPgTypeIdentifier: 'public.jwt_token',
 				enableQueryBatching: true,
 				legacyRelations: "omit",
 				pgSettings(req) {
